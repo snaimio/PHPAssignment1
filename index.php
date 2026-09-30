@@ -1,36 +1,31 @@
 <?php
 /**
  * index.php
- * Home page. Fetches all books and shows them in a table.
+ * Home page. Fetches all books (with their format) and shows them in a table.
  * Uses header.php and footer.php for the surrounding layout.
  */
 
 declare(strict_types=1);
 
 require('database.php');
-
-/**
- * Escape a value for safe HTML output.
- * Small helper so the template markup stays readable.
- */
-function e(?string $value): string {
-    return htmlspecialchars($value ?? '', ENT_QUOTES, 'UTF-8');
-}
+require('functions.php');
 
 // Shows up in the browser tab
 $pageTitle = 'Home';
 
-// Only grab the columns we actually display, sorted by title
-$query = 'SELECT title, author, genre, isbn, publishedDate
-          FROM books
-          ORDER BY title';
+// Pull books and their format name using a LEFT JOIN
+$query = 'SELECT b.bookID, b.title, b.author, b.genre, b.isbn, b.publishedDate,
+                 f.formatName
+          FROM books b
+          LEFT JOIN formats f ON b.formatID = f.formatID
+          ORDER BY b.title';
 
 $statement = $db->prepare($query);
 $statement->execute();
 $rows = $statement->fetchAll();
 $statement->closeCursor();
 
-// Data is ready — now bring in the top of the page
+// Data is ready — bring in the top of the page
 require('header.php');
 ?>
 
@@ -45,11 +40,14 @@ require('header.php');
                 <th>Genre</th>
                 <th>ISBN</th>
                 <th>Published</th>
+                <th>Format</th>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
             </tr>
         </thead>
         <tbody>
             <?php if (empty($rows)): ?>
-                <tr><td colspan="5">No books found.</td></tr>
+                <tr><td colspan="8">No books found.</td></tr>
             <?php else: ?>
                 <?php foreach ($rows as $row): ?>
                     <tr>
@@ -58,11 +56,29 @@ require('header.php');
                         <td><?= e($row['genre']) ?></td>
                         <td><?= e($row['isbn']) ?></td>
                         <td><?= e($row['publishedDate']) ?></td>
+                        <td><?= e($row['formatName']) ?></td>
+
+                        <td>
+                            <form action="update_book_form.php" method="post">
+                                <input type="hidden" name="book_id" value="<?= e((string)$row['bookID']) ?>" />
+                                <input type="submit" value="Update" class="btn-update" />
+                            </form>
+                        </td>
+
+                        <td>
+                            <form action="delete_book.php" method="post"
+                                  onsubmit="return confirm('Delete this book?');">
+                                <input type="hidden" name="book_id" value="<?= e((string)$row['bookID']) ?>" />
+                                <input type="submit" value="Delete" class="btn-delete" />
+                            </form>
+                        </td>
                     </tr>
                 <?php endforeach; ?>
             <?php endif; ?>
         </tbody>
     </table>
+
+    <p><a href="add_book_form.php">Add New Book</a></p>
 </main>
 
 <?php require('footer.php'); ?>

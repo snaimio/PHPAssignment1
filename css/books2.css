@@ -1,0 +1,247 @@
+/*
+ * books2.css
+ * Book Library — clean, warm, responsive.
+ */
+
+/* ============================================
+   Page basics
+   ============================================ */
+
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: #FAF7F0;
+    margin: 0;
+    padding: 20px;
+    color: #3a2f27;
+}
+
+main {
+    width: 95%;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 1.5em;
+    background: #ffffff;
+    border: 2px solid #5C4033;
+    box-sizing: border-box;
+    overflow-x: auto;
+}
+
+h1 {
+    color: #5C4033;
+    text-align: center;
+    margin-top: 0;
+}
+
+h2 {
+    text-align: center;
+    color: #5C4033;
+}
+
+/* ============================================
+   Tables
+   ============================================ */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    font-size: 0.9em;
+}
+
+th, td {
+    padding: 8px 6px;
+    border: 1px solid #D3C4A8;
+    text-align: center;
+    vertical-align: middle;
+    word-wrap: break-word;
+}
+
+thead th {
+    background-color: #5C4033;
+    color: #ffffff;
+    padding: 10px 6px;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #F5EFE3;
+}
+
+/* ============================================
+   Table buttons
+   ============================================ */
+
+td form {
+    display: inline;
+    margin: 0;
+}
+
+td input[type="submit"] {
+    padding: 5px 10px;
+    font-size: 0.85em;
+    font-weight: 600;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.btn-update {
+    background: #15803d;
+}
+
+.btn-update:hover {
+    background: #166534;
+}
+
+.btn-delete {
+    background: #9a3412;
+}
+
+.btn-delete:hover {
+    background: #7c2d12;
+}
+
+/* ============================================
+   Forms
+   ============================================ */
+
+form {
+    margin: 1.5em auto;
+    max-width: 600px;
+    width: 100%;
+    overflow: auto;
+}
+
+label {
+    display: block;
+    float: left;
+    width: 12em;
+    text-align: right;
+    padding-right: 1em;
+    line-height: 2.5em;
+    color: #5C4033;
+    font-weight: 500;
+}
+
+input[type="text"],
+select {
+    float: left;
+    width: 20em;
+    min-width: 20em;
+    max-width: 20em;
+    height: 2.5em;
+    padding: 0 0.75em;
+    box-sizing: border-box;
+    border: 1px solid #D3C4A8;
+    border-radius: 4px;
+    font-size: 1em;
+    background: #ffffff;
+    color: #3a2f27;
+}
+
+/* Date input — matching style, no !important, no appearance override initially */
+input[type="date"] {
+    float: left;
+    width: 20em;
+    min-width: 20em;
+    max-width: 20em;
+    height: 2.5em;
+    padding: 0 0.75em;
+    box-sizing: border-box;
+    border: 1px solid #D3C4A8;
+    border-radius: 4px;
+    font-size: 1em;
+    background: #ffffff;
+    color: #3a2f27;
+    font-family: inherit;
+}
+
+input[type="text"]:focus,
+input[type="date"]:focus,
+select:focus {
+    outline: none;
+    border-color: #5C4033;
+}
+
+/* Form submit button — centered under the input column */
+#buttons {
+    clear: both;
+    margin-top: 0.5em;
+    padding-top: 0.5em;
+    margin-left: 13em;
+    width: 20em;
+    text-align: center;
+}
+
+#buttons input[type="submit"] {
+    display: inline-block;
+    padding: 0.7em 2.5em;
+    font-size: 1em;
+    font-weight: 600;
+    color: #ffffff;
+    background: #15803d;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#buttons input[type="submit"]:hover {
+    background: #166534;
+}
+
+br {
+    clear: both;
+}
+
+/* ============================================
+   Responsive
+   ============================================ */
+
+@media (max-width: 900px) {
+    th, td {
+        padding: 6px 4px;
+        font-size: 0.85em;
+    }
+
+    td input[type="submit"] {
+        padding: 4px 8px;
+        font-size: 0.8em;
+    }
+}
+
+@media (max-width: 600px) {
+    label {
+        width: 100%;
+        text-align: left;
+        padding-right: 0;
+        padding-bottom: 0.25em;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    select {
+        width: 100%;
+        min-width: 100%;
+        max-width: 100%;
+    }
+
+    #buttons {
+        margin-left: 0;
+        width: 100%;
+        margin-top: 1em;
+    }
+
+    #buttons input[type="submit"] {
+        display: block;
+        margin: 1em auto 0;
+    }
+
+    table {
+        font-size: 0.75em;
+    }
+
+    th, td {
+        padding: 5px 3px;
+    }
+}

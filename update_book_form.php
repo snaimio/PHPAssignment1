@@ -1,0 +1,93 @@
+<?php
+/**
+ * update_book_form.php
+ * Shows a pre-filled form for editing a book.
+ * Receives book_id via POST from index.php.
+ */
+
+declare(strict_types=1);
+
+require('database.php');
+require('functions.php');
+
+// Get the book_id from the POST (sent from index.php)
+$book_id = filter_input(INPUT_POST, 'book_id', FILTER_VALIDATE_INT);
+
+// If no valid ID was sent, go back to the list
+if ($book_id === null || $book_id === false) {
+    header('Location: index.php');
+    die();
+}
+
+// Fetch the book
+$queryBook = 'SELECT bookID, title, author, genre, isbn, publishedDate, formatID
+              FROM books
+              WHERE bookID = :bookID';
+$statement = $db->prepare($queryBook);
+$statement->bindValue(':bookID', $book_id);
+$statement->execute();
+$book = $statement->fetch();
+$statement->closeCursor();
+
+// If the book doesn't exist, go back to the list
+if (!$book) {
+    header('Location: index.php');
+    die();
+}
+
+// Fetch all formats for the dropdown
+$queryFormats = 'SELECT formatID, formatName FROM formats ORDER BY formatName';
+$statement = $db->prepare($queryFormats);
+$statement->execute();
+$formats = $statement->fetchAll();
+$statement->closeCursor();
+
+$pageTitle = 'Update Book';
+
+require('header.php');
+?>
+
+<main>
+    <h2>Update Book</h2>
+
+    <form action="update_book.php" method="post" id="update_book_form">
+        <!-- Hidden field carries the book ID to the handler -->
+        <input type="hidden" name="book_id" value="<?= e((string)$book['bookID']) ?>" />
+
+        <div id="data">
+            <label>Title:</label>
+            <input type="text" name="title" value="<?= e($book['title']) ?>"><br>
+
+            <label>Author:</label>
+            <input type="text" name="author" value="<?= e($book['author']) ?>"><br>
+
+            <label>Genre:</label>
+            <input type="text" name="genre" value="<?= e($book['genre']) ?>"><br>
+
+            <label>ISBN:</label>
+            <input type="text" name="isbn" value="<?= e($book['isbn']) ?>"><br>
+
+            <label>Published Date:</label>
+            <input type="date" name="published_date" value="<?= e($book['publishedDate']) ?>"><br>
+
+            <label>Format:</label>
+            <select name="format_id">
+                <?php foreach ($formats as $format): ?>
+                    <option value="<?= e((string)$format['formatID']) ?>"
+                        <?php if ($format['formatID'] == $book['formatID']) echo 'selected'; ?>>
+                        <?= e($format['formatName']) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select><br>
+        </div>
+
+        <div id="buttons">
+            <label>&nbsp;</label>
+            <input type="submit" value="Update Book"><br>
+        </div>
+    </form>
+
+    <p><a href="index.php">View Book List</a></p>
+</main>
+
+<?php require('footer.php'); ?>

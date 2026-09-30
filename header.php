@@ -1,9 +1,7 @@
 <?php
 /**
  * header.php
- * Top half of every page: doctype, <head>, and the site heading.
- * Pages can set $pageTitle before including this file to
- * customise the browser tab text.
+ * Top half of every page.
  */
 
 declare(strict_types=1);
@@ -14,8 +12,9 @@ $pageTitle = $pageTitle ?? 'Book Library';
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($pageTitle) ?> - Book Library</title>
-    <link rel="stylesheet" href="css/books.css">
+    <link rel="stylesheet" href="css/books2.css">
 </head>
 <body>
 
