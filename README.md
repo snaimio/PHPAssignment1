@@ -28,7 +28,9 @@ A PHP + MySQL app that manages a personal book library with full CRUD functional
 
 Put this folder inside XAMPP's `htdocs` directory:
 
+```
 /Applications/XAMPP/xamppfiles/htdocs/PHPAssignment1/
+```
 
 ### Step 2 — Start services
 
@@ -57,7 +59,9 @@ No manual database creation needed — the SQL file handles everything.
 
 Visit:
 
+```
 http://localhost/PHPAssignment1/index.php
+```
 
 ## Default Credentials
 
@@ -70,6 +74,7 @@ If your MySQL uses different credentials, update them in `database.php`.
 
 ## Project Structure
 
+```
 PHPAssignment1/
 ├── css/
 │   └── books2.css
@@ -90,6 +95,7 @@ PHPAssignment1/
 ├── update_book_confirmation.php
 ├── update_book_form.php
 └── update_error.php
+```
 
 ## Author
 
