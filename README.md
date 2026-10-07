@@ -1,107 +1,115 @@
-# PHPAssignment1 – Book Library with Image Upload & CRUD
+# PHP Book Library Project (Assignments 1, 2 & 3)
 
-A PHP + MySQL web application that manages a personal book library with full CRUD functionality, cover image uploads, automated thumbnail generation, and a dedicated book details view.
+A full-featured PHP & MySQL web application developed iteratively across **Assignment 1**, **Assignment 2**, and **Assignment 3**. It provides complete library management with relational database design, secure CRUD workflows, and an image processing and upload pipeline.
 
-## Features
+---
 
-- **List Books:** View all books in a responsive catalog table with cover thumbnails, title, author, genre, ISBN, published date, and format.
-- **Book Details:** Dedicated book details page (`book_details.php`) displaying the high-resolution cover image and complete metadata.
-- **Add New Books:** Add books with real-time file upload, dynamic image preview, and server-side validation (empty fields, duplicate ISBN check).
-- **Edit / Update Books:** Pre-filled edit form with current cover preview, live file replacement preview, and old file cleanup upon replacement.
-- **Image Processing:** Automated thumbnail generation (`_100` for table/form previews and `_400` for details view) using PHP's GD library.
-- **Delete Books:** Delete books along with a client-side confirmation check.
-- **Format Categorization:** Relational database design linking books to format categories (Hardcover, Paperback, eBook, Audiobook, PDF) via foreign keys.
-- **Security:** Fully secured with PDO prepared statements and output escaping against SQL injection and XSS.
-- **Responsive Layout:** Clean warm palette styled with CSS Grid/Flexbox and media queries for desktop and mobile viewports.
+## Assignment Progression & Milestones
 
-## Technologies
+### Assignment 1: Database Design & Initial Setup
+- **Relational Schema:** Designed `book_library` database with normalized `books` and `formats` tables connected via foreign key (`formatID`).
+- **Database Connection:** Centralized PDO connection with robust error handling (`database.php` & `database_error.php`).
+- **Catalog View:** Main catalog table displaying book records with format relationships.
 
-- PHP 8 (PDO, GD library)
-- MySQL / MariaDB
-- HTML5 & CSS3
-- JavaScript (Vanilla JS for live file preview)
-- XAMPP (Apache + MySQL)
+### Assignment 2: Full CRUD & Security Hardening
+- **Create (Add Book):** Form with server-side validation against empty fields and duplicate ISBN detection.
+- **Read / List:** Styled catalog table with responsive adaptations.
+- **Update (Edit Book):** Pre-populated edit form allowing book metadata modification.
+- **Delete (Remove Book):** Safe book deletion with client-side confirmation.
+- **Security:** Strict PDO prepared statements across all queries and `htmlspecialchars()` output escaping against XSS and SQL injection.
 
-## Setup
+### Assignment 3: Image Upload, Processing & Details View
+- **Multipart Form Uploads:** Added file upload support (`enctype="multipart/form-data"`) to Add and Update forms.
+- **Automated GD Image Processing:** Custom `image_util.php` module using PHP's GD library to resize and generate:
+  - `_100` thumbnails ($100\times100\text{px}$) for catalog and form previews.
+  - `_400` medium images ($300\times300\text{px}$) for the details page.
+- **Image Preview UI:** Dynamic JavaScript preview on file selection and a responsive `.form-image-box` preview container.
+- **Storage Management:** Automatic removal of old image assets upon updating book covers (preserving default placeholders).
+- **Book Details Page:** Dedicated view (`book_details.php`) showcasing the enlarged cover image and full book metadata.
+
+---
+
+## Technologies Used
+
+- **Backend:** PHP 8 (PDO, GD Library)
+- **Database:** MySQL / MariaDB
+- **Frontend:** HTML5, CSS3, JavaScript (DOM & File API)
+- **Environment:** XAMPP (Apache + MySQL)
+
+---
+
+## Setup & Installation
 
 **Prerequisite:** XAMPP installed and running.
 
-### Step 1 — Place the project
-
-Place this folder inside XAMPP's `htdocs` directory:
-
+### 1. Project Location
+Clone or place this repository inside your XAMPP `htdocs` directory:
 ```
 /Applications/XAMPP/xamppfiles/htdocs/PHPAssignment1/
 ```
 
-### Step 2 — Start services
+### 2. Start Services
+Launch **XAMPP Control Panel** and start **Apache** and **MySQL**.
 
-Open **XAMPP Control Panel** and start both:
-- **Apache**
-- **MySQL**
+### 3. Database Setup (Single-Step Import)
+1. Open phpMyAdmin at [http://localhost/phpmyadmin](http://localhost/phpmyadmin).
+2. Go to the **Import** tab.
+3. Choose `database.sql` from the root of this project and click **Go**.
 
-### Step 3 — Import the database
+The script will automatically create the database, tables, relationships, and populate seed book records and image references.
 
-1. Open phpMyAdmin: [http://localhost/phpmyadmin](http://localhost/phpmyadmin)
-2. Click the **Import** tab at the top.
-3. Click **Choose File** and select `database.sql` from this project directory.
-4. Click **Go**.
-
-The `database.sql` file will automatically:
-- Create the `book_library` database
-- Create the `books` and `formats` tables with relationships
-- Insert sample book data with default image placeholders
-
-### Step 4 — Run the app
-
-Visit in your browser:
-
+### 4. Run the Application
+Open your browser and navigate to:
 ```
 http://localhost/PHPAssignment1/index.php
 ```
 
-## Default Database Configuration
+---
 
-The application connects using XAMPP default settings:
+## Database Configuration
+
+Default settings in `database.php`:
 - **Host:** `localhost`
 - **Database:** `book_library`
 - **User:** `root`
-- **Password:** *(empty)*
+- **Password:** *(blank / empty by default in XAMPP)*
 
-To change credentials, update `database.php`.
+---
 
 ## Project Structure
 
 ```
 PHPAssignment1/
 ├── css/
-│   └── books2.css
+│   └── books2.css                # Application stylesheet with responsive media queries
 ├── images/
-│   ├── placeholder.jpg
-│   ├── placeholder_100.jpg
-│   └── placeholder_400.jpg
-├── add_book.php
-├── add_book_confirmation.php
-├── add_book_form.php
-├── add_error.php
-├── book_details.php
-├── database.php
-├── database.sql
-├── database_error.php
-├── delete_book.php
-├── footer.php
-├── functions.php
-├── header.php
-├── image_util.php
-├── index.php
-├── README.md
-├── update_book.php
-├── update_book_confirmation.php
-├── update_book_form.php
-└── update_error.php
+│   ├── placeholder.jpg           # Default fallback image
+│   ├── placeholder_100.jpg       # Default 100px thumbnail
+│   └── placeholder_400.jpg       # Default 400px details image
+├── add_book.php                  # Add book backend handler & image processor
+├── add_book_confirmation.php     # Confirmation screen after adding a book
+├── add_book_form.php             # Form to add a new book
+├── add_error.php                 # Add book error view
+├── book_details.php              # Full book details view with large cover
+├── database.php                  # PDO database connection configuration
+├── database.sql                  # Complete SQL schema, constraints & seed data
+├── database_error.php            # Database connection failure screen
+├── delete_book.php               # Book deletion backend handler
+├── footer.php                    # Shared page footer
+├── functions.php                 # Helper functions (e.g., e() for htmlspecialchars)
+├── header.php                    # Shared page header and CSS link
+├── image_util.php                # GD image resizing & thumbnail generation utility
+├── index.php                     # Main catalog table listing all books
+├── README.md                     # Project documentation & assignment milestones
+├── update_book.php               # Update book backend handler & image updater
+├── update_book_confirmation.php  # Confirmation screen after updating a book
+├── update_book_form.php          # Pre-filled edit form with live preview
+└── update_error.php              # Update book error view
 ```
+
+---
 
 ## Author
 
-Sheikh Naim
-PHP Assignment — 2026
+**Sheikh Naim**  
+PHP Assignments (1, 2, and 3) — 2026
