@@ -100,12 +100,19 @@ PHPAssignment1/
 ├── header.php                    # Shared page header and CSS link
 ├── image_util.php                # GD image resizing & thumbnail generation utility
 ├── index.php                     # Main catalog table listing all books
+├── LICENSE                       # MIT License
 ├── README.md                     # Project documentation & assignment milestones
 ├── update_book.php               # Update book backend handler & image updater
 ├── update_book_confirmation.php  # Confirmation screen after updating a book
 ├── update_book_form.php          # Pre-filled edit form with live preview
 └── update_error.php              # Update book error view
 ```
+
+---
+
+## License
+
+This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
 
 ---
 
