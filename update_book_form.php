@@ -20,7 +20,7 @@ if ($book_id === null || $book_id === false) {
 }
 
 // Fetch the book
-$queryBook = 'SELECT bookID, title, author, genre, isbn, publishedDate, formatID
+$queryBook = 'SELECT bookID, title, author, genre, isbn, publishedDate, formatID, imageName
               FROM books
               WHERE bookID = :bookID';
 $statement = $db->prepare($queryBook);
@@ -50,7 +50,7 @@ require('header.php');
 <main>
     <h2>Update Book</h2>
 
-    <form action="update_book.php" method="post" id="update_book_form">
+    <form action="update_book.php" method="post" id="update_book_form" enctype="multipart/form-data">
         <!-- Hidden field carries the book ID to the handler -->
         <input type="hidden" name="book_id" value="<?= e((string)$book['bookID']) ?>" />
 
@@ -79,6 +79,19 @@ require('header.php');
                     </option>
                 <?php endforeach; ?>
             </select><br>
+
+            <label>Current Image:</label>
+            <div class="form-image-box">
+                <img
+                    id="imagePreview"
+                    src="images/<?= e($book['imageName'] ?? 'placeholder_100.jpg') ?>"
+                    alt="<?= e($book['title']) ?>"
+                />
+            </div>
+            <br>
+
+            <label>Update Image:</label>
+            <input type="file" name="file1" id="file1" accept="image/*"><br>
         </div>
 
         <div id="buttons">
@@ -89,5 +102,20 @@ require('header.php');
 
     <p><a href="index.php">View Book List</a></p>
 </main>
+
+<script>
+    const fileInput = document.getElementById('file1');
+    const imagePreview = document.getElementById('imagePreview');
+
+    if (fileInput && imagePreview) {
+        fileInput.addEventListener('change', function () {
+            const file = this.files[0];
+            if (file) {
+                const imageURL = URL.createObjectURL(file);
+                imagePreview.src = imageURL;
+            }
+        });
+    }
+</script>
 
 <?php require('footer.php'); ?>

@@ -15,7 +15,7 @@ $pageTitle = 'Home';
 
 // Pull books and their format name using a LEFT JOIN
 $query = 'SELECT b.bookID, b.title, b.author, b.genre, b.isbn, b.publishedDate,
-                 f.formatName
+                 b.imageName, f.formatName
           FROM books b
           LEFT JOIN formats f ON b.formatID = f.formatID
           ORDER BY b.title';
@@ -35,6 +35,7 @@ require('header.php');
     <table>
         <thead>
             <tr>
+                <th>Cover</th>
                 <th>Title</th>
                 <th>Author</th>
                 <th>Genre</th>
@@ -43,14 +44,22 @@ require('header.php');
                 <th>Format</th>
                 <th>&nbsp;</th>
                 <th>&nbsp;</th>
+                <th>&nbsp;</th>
             </tr>
         </thead>
         <tbody>
             <?php if (empty($rows)): ?>
-                <tr><td colspan="8">No books found.</td></tr>
+                <tr><td colspan="10">No books found.</td></tr>
             <?php else: ?>
                 <?php foreach ($rows as $row): ?>
                     <tr>
+                        <td>
+                            <img
+                                src="images/<?= e($row['imageName'] ?? 'placeholder_100.jpg') ?>"
+                                alt="<?= e($row['title']) ?>"
+                                height="60"
+                            />
+                        </td>
                         <td><?= e($row['title']) ?></td>
                         <td><?= e($row['author']) ?></td>
                         <td><?= e($row['genre']) ?></td>
@@ -70,6 +79,13 @@ require('header.php');
                                   onsubmit="return confirm('Delete this book?');">
                                 <input type="hidden" name="book_id" value="<?= e((string)$row['bookID']) ?>" />
                                 <input type="submit" value="Delete" class="btn-delete" />
+                            </form>
+                        </td>
+
+                        <td>
+                            <form action="book_details.php" method="post">
+                                <input type="hidden" name="book_id" value="<?= e((string)$row['bookID']) ?>" />
+                                <input type="submit" value="View Details" class="btn-view" />
                             </form>
                         </td>
                     </tr>

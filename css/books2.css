@@ -102,6 +102,14 @@ td input[type="submit"] {
     background: #7c2d12;
 }
 
+.btn-view {
+    background: #5C4033;
+}
+
+.btn-view:hover {
+    background: #4a3428;
+}
+
 /* ============================================
    Forms
    ============================================ */
@@ -125,23 +133,9 @@ label {
 }
 
 input[type="text"],
+input[type="file"],
+input[type="date"],
 select {
-    float: left;
-    width: 20em;
-    min-width: 20em;
-    max-width: 20em;
-    height: 2.5em;
-    padding: 0 0.75em;
-    box-sizing: border-box;
-    border: 1px solid #D3C4A8;
-    border-radius: 4px;
-    font-size: 1em;
-    background: #ffffff;
-    color: #3a2f27;
-}
-
-/* Date input — matching style, no !important, no appearance override initially */
-input[type="date"] {
     float: left;
     width: 20em;
     min-width: 20em;
@@ -159,9 +153,59 @@ input[type="date"] {
 
 input[type="text"]:focus,
 input[type="date"]:focus,
+input[type="file"]:focus,
 select:focus {
     outline: none;
     border-color: #5C4033;
+}
+
+/* File input — inner button styling */
+input[type="file"] {
+    padding: 0.35em 0.75em;
+    cursor: pointer;
+    line-height: 1.8em;
+}
+
+input[type="file"]::file-selector-button {
+    padding: 0.35em 1em;
+    margin-right: 0.75em;
+    border: none;
+    border-radius: 4px;
+    background: #5C4033;
+    color: #ffffff;
+    font-size: 0.9em;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+input[type="file"]::file-selector-button:hover {
+    background: #4a3428;
+}
+
+/* Image preview container */
+.form-image-box {
+    float: left;
+    width: 20em;
+    min-width: 20em;
+    max-width: 20em;
+    height: 120px;
+    border: 1px solid #D3C4A8;
+    border-radius: 4px;
+    background: #FAF7F0;
+    overflow: hidden;
+    margin-bottom: 1em;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+}
+
+.form-image-box img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    display: block;
 }
 
 /* Form submit button — centered under the input column */
@@ -195,6 +239,62 @@ br {
 }
 
 /* ============================================
+   Details page
+   ============================================ */
+
+.container {
+    max-width: 700px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    padding: 2em;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.container h2 {
+    margin-bottom: 1em;
+    color: #5C4033;
+}
+
+.book-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 1.5em;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.book-info {
+    text-align: left;
+    max-width: 400px;
+    margin: 0 auto 1.5em;
+}
+
+.book-info p {
+    margin: 8px 0;
+    font-size: 1em;
+    color: #3a2f27;
+}
+
+.book-info strong {
+    color: #5C4033;
+}
+
+.back-link {
+    display: inline-block;
+    padding: 0.7em 1.5em;
+    background: #5C4033;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+.back-link:hover {
+    background: #4a3428;
+}
+
+/* ============================================
    Responsive
    ============================================ */
 
@@ -219,8 +319,10 @@ br {
     }
 
     input[type="text"],
+    input[type="file"],
     input[type="date"],
-    select {
+    select,
+    .form-image-box {
         width: 100%;
         min-width: 100%;
         max-width: 100%;

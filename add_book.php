@@ -19,7 +19,14 @@ $isbn           = filter_input(INPUT_POST, 'isbn');
 $published_date = filter_input(INPUT_POST, 'published_date');
 $format_id      = filter_input(INPUT_POST, 'format_id', FILTER_VALIDATE_INT);
 
+// Get the uploaded file (if any)
+$image = $_FILES['file1'];
+
+// Directory where images live
+$base_dir = 'images/';
+
 require_once('database.php');
+require_once('image_util.php');
 
 // ----- Validation -----
 
@@ -50,10 +57,33 @@ if ($existing) {
     die();
 }
 
+// ----- Handle the cover image -----
+
+// Default: use the placeholder image
+$image_name = 'placeholder_100.jpg';
+
+// If a file was uploaded, process it
+if ($image && $image['error'] == UPLOAD_ERR_OK) {
+    // Save the original to images/
+    $original_filename = basename($image['name']);
+    $upload_path = $base_dir . $original_filename;
+    move_uploaded_file($image['tmp_name'], $upload_path);
+
+    // Generate the _400 and _100 thumbnails
+    process_image($base_dir, $original_filename);
+
+    // Build the _100 thumbnail filename
+    $dot_pos = strrpos($original_filename, '.');
+    $name_100 = substr($original_filename, 0, $dot_pos) . '_100' . substr($original_filename, $dot_pos);
+
+    // Use the thumbnail filename for the DB
+    $image_name = $name_100;
+}
+
 // ----- Insert the new book -----
 
-$query = 'INSERT INTO books (title, author, genre, isbn, publishedDate, formatID)
-          VALUES (:title, :author, :genre, :isbn, :publishedDate, :formatID)';
+$query = 'INSERT INTO books (title, author, genre, isbn, publishedDate, formatID, imageName)
+          VALUES (:title, :author, :genre, :isbn, :publishedDate, :formatID, :imageName)';
 
 $statement = $db->prepare($query);
 $statement->bindValue(':title', $title);
@@ -62,6 +92,7 @@ $statement->bindValue(':genre', $genre);
 $statement->bindValue(':isbn', $isbn);
 $statement->bindValue(':publishedDate', $published_date);
 $statement->bindValue(':formatID', $format_id);
+$statement->bindValue(':imageName', $image_name);
 $statement->execute();
 $statement->closeCursor();
 

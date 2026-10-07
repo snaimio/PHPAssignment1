@@ -1,12 +1,14 @@
 <?php
 /**
  * add_book_form.php
+ * Displays an empty form to add a new book.
+ * Loads the list of formats for the dropdown.
  */
 
 declare(strict_types=1);
 
 require('database.php');
-require('functions.php');  
+require('functions.php');
 
 // Fetch all formats for the dropdown
 $query = 'SELECT formatID, formatName FROM formats ORDER BY formatName';
@@ -23,7 +25,7 @@ require('header.php');
 <main>
     <h2>Add Book</h2>
 
-    <form action="add_book.php" method="post" id="add_book_form">
+    <form action="add_book.php" method="post" id="add_book_form" enctype="multipart/form-data">
         <div id="data">
             <label>Title:</label>
             <input type="text" name="title"><br>
@@ -48,6 +50,9 @@ require('header.php');
                     </option>
                 <?php endforeach; ?>
             </select><br>
+
+            <label>Cover Image:</label>
+            <input type="file" name="file1" accept="image/*"><br>
         </div>
 
         <div id="buttons">
