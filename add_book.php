@@ -57,6 +57,40 @@ if ($existing) {
     die();
 }
 
+// Check for upload errors
+if ($image !== null && $image['error'] !== UPLOAD_ERR_OK && $image['error'] !== UPLOAD_ERR_NO_FILE) {
+    $_SESSION['add_error'] = 'There was a problem uploading your image. Please try again with a smaller file.';
+    header('Location: add_error.php');
+    die();
+}
+
+// Check for file size limit (5MB max)
+if ($image !== null && $image['error'] === UPLOAD_ERR_OK && $image['size'] > 5 * 1024 * 1024) {
+    $_SESSION['add_error'] = 'The image is too large. Please use a file under 5MB.';
+    header('Location: add_error.php');
+    die();
+}
+
+// Check for valid image content and dimensions (max 5000x5000)
+if ($image !== null && $image['error'] === UPLOAD_ERR_OK) {
+    $image_size = getimagesize($image['tmp_name']);
+
+    if ($image_size === false) {
+        $_SESSION['add_error'] = 'The uploaded file is not a valid image. Please upload a JPG, PNG, or GIF.';
+        header('Location: add_error.php');
+        die();
+    }
+
+    $image_width  = $image_size[0];
+    $image_height = $image_size[1];
+
+    if ($image_width > 5000 || $image_height > 5000) {
+        $_SESSION['add_error'] = 'The image dimensions are too large. Maximum is 5000 × 5000 pixels.';
+        header('Location: add_error.php');
+        die();
+    }
+}
+
 // ----- Handle the cover image -----
 
 // Default: use the placeholder image
