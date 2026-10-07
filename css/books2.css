@@ -454,14 +454,15 @@ br {
 }
 
 .book-image {
-    max-width: 250px;
-    width: 100%;
+    max-width: 260px;
+    max-height: 320px;
+    width: auto;
     height: auto;
     border-radius: var(--radius-md);
     margin: 0 auto 1.75rem;
-    box-shadow: var(--shadow-lg);
+    box-shadow: 0 4px 14px rgba(92, 64, 51, 0.15);
     display: block;
-    border: 1px solid var(--color-border-subtle);
+    object-fit: contain;
 }
 
 .book-info {
