@@ -54,8 +54,13 @@ require('header.php');
                 <?php foreach ($rows as $row): ?>
                     <tr>
                         <td>
+                            <?php
+                            $row_image = (!empty($row['imageName']) && file_exists('images/' . $row['imageName']))
+                                ? $row['imageName']
+                                : 'placeholder_100.jpg';
+                            ?>
                             <img
-                                src="images/<?= e($row['imageName'] ?? 'placeholder_100.jpg') ?>"
+                                src="images/<?= e($row_image) ?>"
                                 alt="<?= e($row['title']) ?>"
                                 height="60"
                             />

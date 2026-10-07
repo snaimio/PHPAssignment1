@@ -82,9 +82,14 @@ require('header.php');
 
             <label>Current Image:</label>
             <div class="form-image-box">
+                <?php
+                $current_image = (!empty($book['imageName']) && file_exists('images/' . $book['imageName']))
+                    ? $book['imageName']
+                    : 'placeholder_100.jpg';
+                ?>
                 <img
                     id="imagePreview"
-                    src="images/<?= e($book['imageName'] ?? 'placeholder_100.jpg') ?>"
+                    src="images/<?= e($current_image) ?>"
                     alt="<?= e($book['title']) ?>"
                 />
             </div>

@@ -40,7 +40,9 @@ if (!$book) {
 
 // ----- Build the 400px image filename -----
 
-$image_name = $book['imageName'] ?? 'placeholder_100.jpg';
+$image_name = (!empty($book['imageName']) && file_exists('images/' . $book['imageName']))
+    ? $book['imageName']
+    : 'placeholder_100.jpg';
 
 // Extract the base name and extension
 $dot_pos = strrpos($image_name, '.');
@@ -53,6 +55,11 @@ if (str_ends_with($base_name, '_100')) {
 }
 
 $image_name_400 = $base_name . '_400' . $extension;
+
+// If the 400px version doesn't exist on disk, fallback to placeholder_400.jpg
+if (!file_exists('images/' . $image_name_400)) {
+    $image_name_400 = 'placeholder_400.jpg';
+}
 
 $pageTitle = 'Book Details';
 
