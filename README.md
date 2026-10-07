@@ -1,4 +1,4 @@
-# PHP Book Library Project (Assignments 1, 2 & 3)
+# PHP + MySQL Book Library
 
 A full-featured PHP & MySQL web application developed iteratively across **Assignment 1**, **Assignment 2**, and **Assignment 3**. It provides complete library management with relational database design, secure CRUD workflows, and an image processing and upload pipeline.
 
