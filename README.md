@@ -38,6 +38,21 @@ A full-featured PHP & MySQL web application developed iteratively across **Assig
 
 ---
 
+## Screenshots
+
+### 1. Catalog View (All Books)
+![All Books Catalog](screenshots/all_books_catalog.png)
+
+### 2. Update Book & Live Image Preview
+![Update Book Form](screenshots/update_book_form.png)
+
+### 3. Book Details Views
+| Atomic Habits | The Psychology of Money |
+| :---: | :---: |
+| ![Book Details - Atomic Habits](screenshots/book_details_1.png) | ![Book Details - The Psychology of Money](screenshots/book_details_2.png) |
+
+---
+
 ## Setup & Installation
 
 **Prerequisite:** XAMPP installed and running.
@@ -86,6 +101,11 @@ PHPAssignment1/
 │   ├── placeholder.jpg           # Default fallback image
 │   ├── placeholder_100.jpg       # Default 100px thumbnail
 │   └── placeholder_400.jpg       # Default 400px details image
+├── screenshots/
+│   ├── all_books_catalog.png     # Screenshot of catalog table
+│   ├── book_details_1.png        # Screenshot of book details view (1)
+│   ├── book_details_2.png        # Screenshot of book details view (2)
+│   └── update_book_form.png      # Screenshot of update form with image preview
 ├── add_book.php                  # Add book backend handler & image processor
 ├── add_book_confirmation.php     # Confirmation screen after adding a book
 ├── add_book_form.php             # Form to add a new book
