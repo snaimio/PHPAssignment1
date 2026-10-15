@@ -609,3 +609,70 @@ br {
         padding: 6px 3px;
     }
 }
+
+/* ==========================================================================
+   Login & Register Form Tweaks
+   Fixes: text/password inputs render shorter than select/date inputs.
+   Only applies to #login_form and #register_user_form, so nothing
+   else in the app is affected.
+   ========================================================================== */
+
+#login_form input[type="text"],
+#login_form input[type="password"],
+#register_user_form input[type="text"],
+#register_user_form input[type="password"] {
+    height: 2.625rem;
+    line-height: 2.625rem;
+    width: 20rem;
+    min-width: 20rem;
+    max-width: 20rem;
+    padding: 0 0.875rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    font-size: 0.9375rem;
+    font-family: inherit;
+    background: var(--bg-surface);
+    color: var(--color-text-main);
+    box-sizing: border-box;
+    transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+#login_form input[type="text"]:focus,
+#login_form input[type="password"]:focus,
+#register_user_form input[type="text"]:focus,
+#register_user_form input[type="password"]:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(92, 64, 51, 0.18);
+}
+
+/* Labels in login/register forms — match column style of add_book_form */
+#login_form label,
+#register_user_form label {
+    display: block;
+    float: left;
+    width: 11rem;
+    text-align: right;
+    padding-right: 1.25rem;
+    line-height: 2.625rem;
+    color: var(--color-primary);
+    font-weight: 600;
+    font-size: 0.9375rem;
+}
+
+/* Center the submit button row in login/register forms */
+#login_form #buttons,
+#register_user_form #buttons {
+    clear: both;
+    margin-top: 1.25rem;
+    margin-left: 12.25rem;
+    width: 20rem;
+    text-align: center;
+}
+
+/* The "Register" link below the login form should sit centered too */
+#login_form + p,
+#register_user_form + p {
+    text-align: center;
+    margin-top: 1rem;
+}

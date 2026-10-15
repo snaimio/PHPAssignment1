@@ -2,15 +2,25 @@
 /**
  * index.php
  * Home page. Fetches all books (with their format) and shows them in a table.
- * Uses header.php and footer.php for the surrounding layout.
+ * Requires the user to be logged in.
  */
 
 declare(strict_types=1);
 
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+    // ↑ Needed so I can read the isLoggedIn flag below.
+}
+
+if (!isset($_SESSION['isLoggedIn'])) {
+    // ↑ Login guard: if the user isn't logged in, send them to the login page.
+    header('Location: login_form.php');
+    die();
+}
+
 require('database.php');
 require('functions.php');
 
-// Shows up in the browser tab
 $pageTitle = 'Home';
 
 // Pull books and their format name using a LEFT JOIN
@@ -25,12 +35,16 @@ $statement->execute();
 $rows = $statement->fetchAll();
 $statement->closeCursor();
 
-// Data is ready — bring in the top of the page
 require('header.php');
 ?>
 
 <main>
     <h2>All Books</h2>
+
+    <p style="text-align: right;">
+        Logged in as <strong><?= e($_SESSION['userName']) ?></strong> |
+        <a href="logout.php">Log Out</a>
+    </p>
 
     <table>
         <thead>

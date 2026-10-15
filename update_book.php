@@ -7,7 +7,14 @@
 
 declare(strict_types=1);
 
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+if (!isset($_SESSION['isLoggedIn'])) {
+    header('Location: login_form.php');
+    die();
+}
 
 // Get form data
 $book_id        = filter_input(INPUT_POST, 'book_id', FILTER_VALIDATE_INT);

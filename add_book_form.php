@@ -2,10 +2,19 @@
 /**
  * add_book_form.php
  * Displays an empty form to add a new book.
- * Loads the list of formats for the dropdown.
+ * Requires the user to be logged in.
  */
 
 declare(strict_types=1);
+
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+if (!isset($_SESSION['isLoggedIn'])) {
+    header('Location: login_form.php');
+    die();
+}
 
 require('database.php');
 require('functions.php');
