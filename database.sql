@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Oct 08, 2026 at 05:06 PM
+-- Generation Time: Oct 15, 2026 at 03:12 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -20,12 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `book_library`
 --
-
-CREATE DATABASE IF NOT EXISTS `book_library`
-  CHARACTER SET utf8mb4
-  COLLATE utf8mb4_general_ci;
-
-USE `book_library`;
 
 -- --------------------------------------------------------
 
@@ -61,7 +55,8 @@ INSERT INTO `books` (`bookID`, `title`, `author`, `genre`, `isbn`, `publishedDat
 (10, 'The Whole-Brain Child', 'Daniel J. Siegel & Tina Payne Bryson', 'Parenting', '978-0-553-38669-1', '2011-10-04', 4, 'the_whole_brain_child_cover_100.jpg'),
 (11, 'Deep Work', 'Cal Newport', 'Productivity', '978-1-4555-8669-1', '2016-01-05', 1, 'deep_work_cover_100.jpeg'),
 (12, 'Thinking, Fast and Slow', 'Daniel Kahneman', 'Psychology', '978-0-374-53355-7', '2011-10-25', 2, 'thinking_fast_and_slow_cover_100.jpeg'),
-(13, 'The Body Keeps the Score', 'Bessel van der Kolk', 'Psychology', '978-0-670-78593-3', '2014-09-25', 2, 'the_body_keeps_the_score_cover_100.jpeg');
+(13, 'The Body Keeps the Score', 'Bessel van der Kolk', 'Psychology', '978-0-670-78593-3', '2014-09-25', 2, 'the_body_keeps_the_score_cover_100.jpeg'),
+(15, 'test book 2', 'test author', 'testing', '234-4444444-444', '2026-09-28', 4, 'placeholder_100.jpg');
 
 -- --------------------------------------------------------
 
@@ -85,6 +80,29 @@ INSERT INTO `formats` (`formatID`, `formatName`) VALUES
 (4, 'Audiobook'),
 (5, 'PDF');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `registrations`
+--
+
+CREATE TABLE `registrations` (
+  `userID` int(11) NOT NULL,
+  `userName` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `emailAddress` varchar(50) NOT NULL,
+  `failedAttempts` int(11) DEFAULT 0,
+  `lastFailedLogin` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `registrations`
+--
+
+INSERT INTO `registrations` (`userID`, `userName`, `password`, `emailAddress`, `failedAttempts`, `lastFailedLogin`) VALUES
+(1, 'testuser', '$2y$10$L56/lbEQUg8SRxKeSS1OhuCo9dNQKAi012Z6T5ef9h.mwzV5mxuaW', 'test@example.com', 4, '2026-10-15 08:50:00'),
+(2, 'testuser2', '$2y$10$Nd3nofRVhvy6ka3rBHqKTepJmR7Ya6iullnkB6uiqmW8CEwIiNsSK', 'test2@example.com', 3, '2026-10-15 08:50:36');
+
 --
 -- Indexes for dumped tables
 --
@@ -103,6 +121,13 @@ ALTER TABLE `formats`
   ADD PRIMARY KEY (`formatID`);
 
 --
+-- Indexes for table `registrations`
+--
+ALTER TABLE `registrations`
+  ADD PRIMARY KEY (`userID`),
+  ADD UNIQUE KEY `unique_userName` (`userName`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -110,13 +135,19 @@ ALTER TABLE `formats`
 -- AUTO_INCREMENT for table `books`
 --
 ALTER TABLE `books`
-  MODIFY `bookID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `bookID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `formats`
 --
 ALTER TABLE `formats`
   MODIFY `formatID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `registrations`
+--
+ALTER TABLE `registrations`
+  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
